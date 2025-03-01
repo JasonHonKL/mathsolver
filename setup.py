@@ -14,7 +14,7 @@ setup(
     ],
     entry_points={
         "console_scripts": [
-            "mathsolver=mathsolver.cli:main",
+            "mathsolver=mathsolver.cli:main",  # Adjusted entry point
         ],
     },
     description="Solve mathematical problems using LLMs with divide and conquer approach",

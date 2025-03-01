@@ -1,7 +1,0 @@
-{
-  "input_file": "input.json",
-  "output_file": "output.json",
-  "api_key": "sk-9a1bf94693904e779858c749d6a04823",
-  "model_link": "deepseek-chat",
-  "base_url":"https://api.deepseek.com"
-}
