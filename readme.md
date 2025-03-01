@@ -6,7 +6,7 @@
 MathSolver is an advanced problem-solving tool that leverages Large Language Models (LLMs) with multiple strategies to solve mathematical problems. It supports various solving methods and integrates with popular LLM providers.
 
 ## Paper
-COMING OUT SOON
+COMING SOON
 
 ## Features
 
