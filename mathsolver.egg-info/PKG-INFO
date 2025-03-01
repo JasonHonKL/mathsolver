@@ -1,0 +1,13 @@
+Metadata-Version: 2.1
+Name: mathsolver
+Version: 0.1.0
+Summary: Solve mathematical problems using LLMs with divide and conquer approach
+Home-page: https://github.com/JasonHonKL/math-solver
+Author: Jason Hon
+Author-email: j2004nol@gmail.com
+Requires-Dist: openai>=1.0.0
+Requires-Dist: pandas
+Requires-Dist: requests
+Requires-Dist: tqdm
+Requires-Dist: networkx
+Requires-Dist: replicate
