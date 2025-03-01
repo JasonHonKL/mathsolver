@@ -1,10 +1,22 @@
 import pandas as pd
 import json
 import os
+import numpy as np
 from tqdm import tqdm
 from ..core.direct_solver import DirectSolver
 from ..core.divide_conquer_solver import DivideConquerSolver
 from .metrics import calculate_metrics
+
+# Custom JSON encoder to handle NumPy types
+class NumpyEncoder(json.JSONEncoder):
+    def default(self, obj):
+        if isinstance(obj, np.integer):
+            return int(obj)
+        elif isinstance(obj, np.floating):
+            return float(obj)
+        elif isinstance(obj, np.ndarray):
+            return obj.tolist()
+        return super(NumpyEncoder, self).default(obj)
 
 def run_benchmark(benchmark_file, provider, output_file, max_iterations=5):
     """
@@ -52,7 +64,7 @@ def run_benchmark(benchmark_file, provider, output_file, max_iterations=5):
             direct_solution = direct_solver.solve(problem)
             
             direct_entry = {
-                'problem_index': i,
+                'problem_index': int(i) if isinstance(i, np.integer) else i,
                 'problem': problem,
                 'ground_truth': ground_truth,
                 'solution': direct_solution['final_answer'],
@@ -67,7 +79,7 @@ def run_benchmark(benchmark_file, provider, output_file, max_iterations=5):
             dc_solution = dc_solver.solve(problem)
             
             dc_entry = {
-                'problem_index': i,
+                'problem_index': int(i) if isinstance(i, np.integer) else i,
                 'problem': problem,
                 'ground_truth': ground_truth,
                 'solution': dc_solution['final_answer'],
@@ -85,7 +97,7 @@ def run_benchmark(benchmark_file, provider, output_file, max_iterations=5):
             }
             
             with open(output_file, 'w') as f:
-                json.dump(all_results, f, indent=2)
+                json.dump(all_results, f, indent=2, cls=NumpyEncoder)
             
             print(f"Completed problem {i+1}/{len(df)}")
             print(f"Direct method took 1 iteration")
@@ -102,7 +114,7 @@ def run_benchmark(benchmark_file, provider, output_file, max_iterations=5):
         }
         
         with open(output_file, 'w') as f:
-            json.dump(all_results, f, indent=2)
+            json.dump(all_results, f, indent=2, cls=NumpyEncoder)
     
     # Calculate and return metrics
     direct_metrics = calculate_metrics(direct_results)
@@ -116,7 +128,7 @@ def run_benchmark(benchmark_file, provider, output_file, max_iterations=5):
     # Save metrics to a separate file
     metrics_file = output_file.replace('.json', '_metrics.json')
     with open(metrics_file, 'w') as f:
-        json.dump(metrics, f, indent=2)
+        json.dump(metrics, f, indent=2, cls=NumpyEncoder)
     
     # Also save as CSV for easier analysis
     direct_df = pd.DataFrame(direct_results)

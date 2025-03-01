@@ -1,0 +1,2 @@
+[console_scripts]
+mathsolver = mathsolver.cli:main
